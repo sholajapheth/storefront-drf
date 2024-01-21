@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.db.models import Q
+
 from store.models import Product
 
 def say_hello(request):
-    query_set = Product.objects.all()
+    queryset = Product.objects.order_by('title')
 
-    list(query_set)
-
-    return render(request, 'hello.html', {'name': 'Mosh'})
+    return render(request, 'hello.html', {'name': 'Mosh', 'products': queryset})
