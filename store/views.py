@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Count
 from .models import Product, Collection
 from .serializers import ProductSerializer, CollectionSerializer
 
@@ -49,7 +50,7 @@ def collection_list(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def collection_detail(request, pk):
     collection = get_object_or_404(Collection.objects.annotate(products_count=Count('products')), pk=pk)
     if request.method == 'GET':
