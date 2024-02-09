@@ -65,4 +65,3 @@ def collection_detail(request, pk):
             return Response({'error': 'Collection cannot be deleted because it includes one or more products'}, status=HTTP_405)
         collection.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-        
