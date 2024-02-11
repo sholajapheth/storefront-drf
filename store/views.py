@@ -18,12 +18,13 @@ class ProductViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {'request': self.request}
 
-    def delete(self, request, pk):
+    def destroy(self, request, pk):
         product = get_object_or_404(Product, pk=pk)
         if product.orderitems_set.count() > 0:
             return Response({'error': 'Product cannot be deleted because it is associated with an order item'})
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)    
+
 
 class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(products_count=Count('products')).all()
