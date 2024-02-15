@@ -79,10 +79,6 @@ class AddCartItemSerializer(serializers.ModelSerializer):
         product_id = self.validated_data['product_id']
         quantity = self.validated_data['quantity']
 
-        # try:
-        #     product = Product.objects.get(pk=product_id)
-        # except Product.DoesNotExist:
-        #     raise ValidationError("Product with id {} does not exist".format(product_id))
 
         try:
             cart_item = CartItem.objects.get(cart_id=cart_id, product_id=product_id)
@@ -97,3 +93,10 @@ class AddCartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
         fields = ['id', 'product_id', 'quantity']
+
+
+class UpdateCartItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CartItem
+        fields = ['quantity']
