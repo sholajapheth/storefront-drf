@@ -47,11 +47,6 @@ class CollectionViewSet(ModelViewSet):
     serializer_class = CollectionSerializer
     permission_classes = [IsAdminOrReadOnly]
 
-    # def destroy(self, request, *args, **kwargs):
-    #     collection = self.get_object()
-    #     if collection.products.count() > 0:
-    #         return Response({'error': ' Collection cannot be deleted because it is associated with an order item'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    #     return super().destroy(request, *args, **kwargs)
     def delete(self, request, pk):
         collection = get_object_or_404(Collection, pk=pk)
         if collection.products.count() > 0:
@@ -111,12 +106,6 @@ class CustomerViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
-
-
-    # def get_permissions(self):
-    #     if self.request.method == 'GET':
-    #         return [AllowAny()]
-    #     return [IsAuthenticated()]
 
 class OrderViewSet(ModelViewSet):
     http_method_names = ['get', 'patch', 'delete', 'head', 'options']
