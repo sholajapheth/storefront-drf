@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.db.models import Q
+from django.core.mail import send_mail, mail_admins, BadHeaderError
 
-from store.models import Product
 
 def say_hello(request):
-    queryset = Product.objects.order_by('title')
-
-    return render(request, 'hello.html', {'name': 'Mosh', 'products': queryset})
+    try:
+        mail_admins('subject', 'message', html_message='message')
+        send_mail('subject', 'message', 'info@thesarfo.com', ['elisahines76@gmail.com'])
+    except BadHeaderError:
+        pass
+    return render(request, 'hello.html', {'name': 'Ernest'})
